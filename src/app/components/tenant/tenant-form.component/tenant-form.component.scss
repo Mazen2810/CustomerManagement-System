@@ -1,0 +1,183 @@
+// Screen Styles
+.print-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  padding: 20px;
+}
+
+.card {
+  border: 1px solid #dee2e6;
+
+  .card-header {
+    padding: 12px 20px;
+
+    h5 {
+      font-size: 1rem;
+    }
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+}
+
+.form-label {
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.signature-section {
+  border-top: 2px dashed #dee2e6;
+  padding-top: 30px;
+}
+
+// Print Styles
+@media print {
+  // Hide non-printable elements
+  .no-print {
+    display: none !important;
+  }
+
+  // Reset page margins
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+
+  // Body styles for print
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    background: white !important;
+  }
+
+  // Container adjustments
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .print-container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+  }
+
+  // Card styles for print
+  .card {
+    border: 1px solid #000 !important;
+    box-shadow: none !important;
+    break-inside: avoid;
+    margin-bottom: 15px !important;
+
+    .card-header {
+      background-color: #0d6efd !important;
+      color: white !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+  }
+
+  // Images
+  img {
+    max-width: 100% !important;
+    break-inside: avoid;
+  }
+
+  // Badges
+  .badge {
+    border: 1px solid currentColor !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+
+    &.bg-success {
+      background-color: #198754 !important;
+      color: white !important;
+    }
+
+    &.bg-danger {
+      background-color: #dc3545 !important;
+      color: white !important;
+    }
+  }
+
+  
+
+  // Footer
+  .print-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    border-top: 1px solid #dee2e6;
+    padding-top: 10px;
+  }
+
+  // Text styles
+  .text-muted {
+    color: #6c757d !important;
+  }
+
+  // Row adjustments for print
+  .row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+  }
+
+  .col-md-3,
+  .col-md-4,
+  .col-md-6,
+  .col-md-9 {
+    flex: 0 0 auto;
+  }
+
+  .col-md-3 {
+    width: 25% !important;
+  }
+
+  .col-md-4 {
+    width: 33.333% !important;
+  }
+
+  .col-md-6 {
+    width: 50% !important;
+  }
+
+  .col-md-9 {
+    width: 75% !important;
+  }
+
+  // Images grid for print
+  .col-6 {
+    width: 50% !important;
+  }
+
+  // Prevent page breaks inside these elements
+  .card-body,
+  .print-header {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  // Header styling
+  .print-header {
+    margin-bottom: 20px !important;
+
+    h1 {
+      font-size: 1.5rem !important;
+    }
+  }
+}
+
+.loading-spinner{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+

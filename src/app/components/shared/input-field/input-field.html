@@ -1,0 +1,39 @@
+<div class="Input">
+  @if (label) {
+    <label [for]="id" class="form-label fw-bold">{{ label }}</label>
+  }
+  <input
+    class="form-control"
+    [ngClass]="{
+      'border-danger': IsInvalid,
+      'border-success': IsValid
+    }"
+    [type]="type"
+    [id]="id"
+    [placeholder]="placeholder"
+    [formControl]="$any(control)"
+    [accept]="accept"
+  />
+
+  @if (IsValid && type != 'date') {
+    <i class="non-date-position text-success fs-4 bi bi-check2-circle"></i>
+  }
+  
+  @if(IsValid && type == 'date'){
+    <i class="position-date date-position text-success fs-4 bi bi-check2-circle"></i>
+  }
+
+  @if (IsInvalid) {
+    <i class="text-danger fs-4 bi bi-x-circle"></i>
+  }
+
+  @if (IsInvalid) {
+    <div class="my-3 bg-danger-subtle text-center rounded-3">
+      @for (error of errors; track error.key) {
+        @if (control?.getError(error.key)) {
+          <p class="fw-bold py-2">{{ error.message }}</p>
+        }
+      }
+    </div>
+  }
+</div>

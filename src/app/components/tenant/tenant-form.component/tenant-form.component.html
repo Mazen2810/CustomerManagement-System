@@ -1,0 +1,168 @@
+@if (isLoading() && customerId) {
+  <div class="loading-spinner">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+} @else {
+  <div class="container py-4">
+    <!-- Action Buttons (Hidden in Print) -->
+    <div class="d-flex justify-content-between align-items-center mb-4 no-print">
+      <app-button
+        title="Back to list"
+        customClasses="btn-outline-secondary"
+        routerLink="/customer-list"
+      >
+        <i class="bi bi-arrow-left me-2"></i>Back to List
+      </app-button>
+      <div class="d-flex gap-2">
+        <app-button title="Print" customClasses="btn-primary" (click)="printPage()">
+          <i class="bi bi-printer me-2"></i>Print
+        </app-button>
+      </div>
+    </div>
+
+    <!-- Printable Content -->
+    @if (customer()) {
+      <div class="print-container">
+        <!-- Header -->
+        <div class="print-header text-center mb-4">
+          <h1 class="h2 fw-bold">Tenant Information</h1>
+          <p class="text-muted">Customer Contract Details</p>
+        </div>
+
+        <!-- Brand Information Section -->
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-building me-2"></i>Brand Information</h5>
+          </div>
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-md-3 text-center">
+                <img
+                  [src]="customer()?.brandLogoUrl"
+                  alt="Brand Logo"
+                  class="img-fluid rounded"
+                  style="max-width: 150px; max-height: 150px; object-fit: contain"
+                />
+              </div>
+              <div class="col-md-9">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold text-muted">Brand Name</label>
+                    <p class="fs-5 mb-0">{{ customer()?.brandName }}</p>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold text-muted">Company Name</label>
+                    <p class="fs-5 mb-0">{{ customer()?.companyName }}</p>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold text-muted">Tax Number</label>
+                    <p class="fs-5 mb-0">{{ customer()?.taxNumber }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Location Information Section -->
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-geo-alt me-2"></i>Location Information</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold text-muted">Company Address</label>
+                <p class="fs-5 mb-0">{{ customer()?.companyAddress }}</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold text-muted">Shop Location</label>
+                <p class="fs-5 mb-0">{{ customer()?.shopLocation }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Information Section -->
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-person me-2"></i>Contact Information</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold text-muted">Contact Person Name</label>
+                <p class="fs-5 mb-0">{{ customer()?.contactPersonName }}</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label fw-bold text-muted">Contact Person Phone</label>
+                <p class="fs-5 mb-0">{{ customer()?.contactPersonPhone }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contract Period Section -->
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="bi bi-calendar me-2"></i>Contract Period</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold text-muted">Start Date</label>
+                <p class="fs-5 mb-0">{{ customer()?.startDate }}</p>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold text-muted">End Date</label>
+                <p class="fs-5 mb-0">{{ customer()?.endDate }}</p>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label fw-bold text-muted">Contract Status</label>
+                @if (contractActive) {
+                  <p class="fs-5 mb-0"><span class="badge bg-success">Active</span></p>
+                } @else {
+                  <p class="fs-5 mb-0"><span class="badge bg-danger">Expired</span></p>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Images Section -->
+        @if (customer()?.images && customer()!.images.length > 0) {
+          <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+              <h5 class="mb-0"><i class="bi bi-images me-2"></i>Shop Images</h5>
+            </div>
+            <div class="card-body">
+              <div class="row g-3">
+                @for (image of customer()?.images; track image; let i = $index) {
+                  <div class="col-6 col-md-3">
+                    <img
+                      [src]="image"
+                      [alt]="'Shop Image ' + (i + 1)"
+                      class="img-thumbnail"
+                      style="width: 100%; height: 150px; object-fit: cover"
+                    />
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        }
+
+        <div class="text-center">
+          <qrcode [qrdata]="qrData" [width]="256"></qrcode>
+        </div>
+
+        <!-- Footer (For Print) -->
+        <div class="print-footer text-center mt-4 pt-3 border-top">
+          <p class="text-muted small mb-0">
+            Generated on {{ today | date: 'fullDate' }} | Customer Management System
+          </p>
+        </div>
+      </div>
+    }
+  </div>
+}

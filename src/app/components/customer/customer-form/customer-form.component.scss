@@ -1,0 +1,38 @@
+// Custom styles for customer form
+
+.form-label {
+  font-weight: 500;
+  color: #495057;
+}
+
+.form-control:focus {
+  border-color: #86b7fe;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+// Image upload area
+.border.rounded.bg-light {
+  border-style: dashed !important;
+  border-width: 2px !important;
+  border-color: #dee2e6 !important;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: #0d6efd !important;
+    background-color: #f8f9ff !important;
+  }
+}
+
+// Section headers
+h5.text-primary {
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 0.5rem;
+}
+
+.loading-spinner{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}

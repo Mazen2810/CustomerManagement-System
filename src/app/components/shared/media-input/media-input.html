@@ -1,0 +1,11 @@
+<div>
+  <input
+    #fileInput
+    type="file"
+    [ngClass]="customClasses"
+    [id]="id"
+    accept="image/*"
+    [attr.multiple]="isMultiple ? true : null"
+    (change)="onFileChange($event)"
+  />
+</div>

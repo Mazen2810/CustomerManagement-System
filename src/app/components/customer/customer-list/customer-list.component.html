@@ -1,0 +1,109 @@
+
+<!-- Display spinner before loading data -->
+@if(isLoading())
+{
+  <div class="loading-spinner">
+
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+}@else {
+
+  <div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="h2 fw-bold mb-0">Customers</h1>
+     
+      <app-button customClasses="btn-primary" title="Add Customer" routerLink="/customer/create">
+      + Add Customer    
+      </app-button>
+    </div>
+  
+    <!-- Search Bar -->
+    <div class="mb-4">
+      <input
+        type="search"
+        placeholder="Search Customers by Brand Name..."
+        class="form-control"
+        style="max-width: 400px"
+       [(ngModel)]="searchText"
+      />
+    </div>
+  
+    <!-- Customer Table -->
+    <div class="card shadow-sm">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Brand</th>
+              <th>Company Name</th>
+              <th>Contact Person</th>
+              <th>Phone</th>
+              <th>Shop Location</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- using custom search pipe to filter result according to brand's name -->
+             @for (customer of customerList() | searchPipe : searchText(); track $index) {
+            <tr>
+              <td>
+                <div class="d-flex align-items-center gap-2">
+                  <img
+                    [src]="customer.brandLogoUrl"
+                    alt="Brand Logo"
+                    class="rounded"
+                    width="40"
+                    height="40"
+                    style="object-fit: cover"
+                  />
+                  <span class="fw-medium">{{customer.brandName}}</span>
+                </div>
+              </td>
+              <td>{{customer.companyName}}</td>
+              <td>{{customer.contactPersonName}}</td>
+              <td>{{customer.contactPersonPhone}}</td>
+              <td>{{customer.shopLocation}}</td>
+              <td>
+                <small class="text-muted">{{customer.startDate}} </small>
+              </td>
+              <td>
+                <small class="text-muted"> {{customer.endDate}}</small>
+              </td>
+              <td>
+               @if(isContractActive(customer.endDate)){
+                <small class="badge bg-success"> Active</small>
+               }@else {
+                <small class="badge bg-danger"> Expired</small>
+
+               }
+              </td>
+              <td>
+                <div class="d-flex gap-2">
+                  <app-button customClasses="btn-sm btn-outline-primary" title="Tenant Info" [routerLink]="['/tenant-info',customer.id]">
+                         <i class="bi bi-info-circle"></i>
+                  </app-button>
+                  
+                  <app-button customClasses="btn-sm btn-outline-warning" title="Edit" [routerLink]="['/customer/edit', customer.id]">
+                    <i class="bi bi-pen"></i>
+                  </app-button>
+                  <app-button customClasses="btn-sm btn-outline-danger" title="Delete" (click)="DeleteCustomer(customer.id)">
+                    <i class="bi bi-trash3-fill"></i>
+                  </app-button>
+                </div>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    
+
+  </div>
+}
+

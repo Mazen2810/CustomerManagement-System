@@ -1,0 +1,322 @@
+<!-- Spinner in case of loading -->
+@if (isLoading() && customerId) {
+  <div class="loading-spinner">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+} @else {
+  <div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="h2 fw-bold mb-0">
+        <!-- Title changes based on mode (Add/Edit) -->
+        @if (customerId) {
+          Edit Customer
+        } @else {
+          Create Customer
+        }
+      </h1>
+
+
+      <app-button
+        title="Back to list"
+        customClasses="btn-outline-secondary"
+        routerLink="/customer-list"
+      >
+        <i class="bi bi-arrow-left me-2"></i>Back to List
+      </app-button>
+    </div>
+
+    <!-- Form Card -->
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <form [formGroup]="customerForm" (ngSubmit)="submitForm()">
+          <!-- Brand Information Section -->
+          <div class="mb-4">
+            <h5 class="fw-semibold mb-3 text-primary">
+              <i class="bi bi-building me-2"></i>Brand Information
+            </h5>
+            <div class="row g-3">
+
+              <!-- Brand Name -->
+              <div class="col-md-6">
+                <app-input-field
+                  [formGroup]="customerForm"
+                  controlName="brandName"
+                  label="brand Name"
+                  type="text"
+                  id="brandName"
+                  placeholder="Enter Brand Name"
+                  [errors]="[
+                    { key: 'required', message: 'Brand Name is required.' },
+                    { key: 'maxlength', message: 'Brand Name cannot exceed 30 characters.' },
+                  ]"
+                >
+                </app-input-field>
+              </div>
+
+
+              <!-- Brand Logo -->
+              <div class="col-md-6">
+                <label for="brandLogoUrl" class="form-label fw-bold">Brand Logo</label>
+
+                <app-media-input
+                  customClasses="form-control"
+                  id="brandLogoUrl "
+                  (fileSelected)="onBrandLogoSelected($event)"
+                >
+                </app-media-input>
+              </div>
+            </div>
+          </div>
+
+          <!-- Company Information Section -->
+          <div class="mb-4">
+            <h5 class="fw-semibold mb-3 text-primary">
+              <i class="bi bi-briefcase me-2"></i>Company Information
+            </h5>
+            <div class="row g-3">
+
+              <!-- Company Name -->
+              <div class="col-md-6">
+                <app-input-field
+                  [formGroup]="customerForm"
+                  controlName="companyName"
+                  label="Company Name"
+                  type="text"
+                  id="companyName"
+                  placeholder="Enter Company Name"
+                  [errors]="[
+                    { key: 'required', message: 'Company Name is required.' },
+                    { key: 'maxlength', message: 'Company Name cannot exceed 30 characters.' },
+                  ]"
+                >
+                </app-input-field>
+              </div>
+
+              <!-- Tax Number -->
+              <div class="col-md-6">
+                <app-input-field
+                  [formGroup]="customerForm"
+                  controlName="taxNumber"
+                  label="Tax Number"
+                  type="text"
+                  id="taxNumber"
+                  placeholder="Enter Tax Number"
+                  [errors]="[
+                    { key: 'required', message: 'Tax Number is required.' },
+                    { key: 'pattern', message: 'Tax Number has to be 9 digits.' },
+                  ]"
+                >
+                </app-input-field>
+              </div>
+
+              <!-- Company Address -->
+              <div class="col-12">
+                <app-input-field
+                  [formGroup]="customerForm"
+                  controlName="companyAddress"
+                  label="Company Address"
+                  type="text"
+                  id="companyAddress"
+                  placeholder="Enter Company Address"
+                  [errors]="[
+                    { key: 'required', message: 'Company Address is required.' },
+                    { key: 'maxlength', message: 'Company Address cannot exceed 50 characters.' },
+                  ]"
+                >
+                </app-input-field>
+              </div>
+              <!-- Shop Location -->
+              <div class="col-12">
+                <app-input-field
+                  [formGroup]="customerForm"
+                  controlName="shopLocation"
+                  label="Shop Location"
+                  type="text"
+                  id="shopLocation"
+                  placeholder="Enter Shop Location"
+                  [errors]="[
+                    { key: 'required', message: 'Shop Location is required.' },
+                    { key: 'maxlength', message: 'Shop Location cannot exceed 50 characters.' },
+                  ]"
+                >
+                </app-input-field>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Information Section -->
+          <div class="mb-4">
+            <h5 class="fw-semibold mb-3 text-primary">
+              <i class="bi bi-person me-2"></i>Contact Information
+            </h5>
+            <div class="row g-3">
+              <!-- Contact Person Name -->
+              <div class="col-md-6">
+                <app-input-field
+                  [formGroup]="customerForm"
+                  controlName="contactPersonName"
+                  label="Contact Person Name"
+                  type="text"
+                  id="contactPersonName"
+                  placeholder="Enter Contact Person Name"
+                  [errors]="[
+                    { key: 'required', message: 'Contact Person Name is required.' },
+                    {
+                      key: 'maxlength',
+                      message: 'Contact Person Name cannot exceed 30 characters.',
+                    },
+                  ]"
+                >
+                </app-input-field>
+              </div>
+              <!-- Contact Person Phone -->
+              <div class="col-md-6">
+                <app-input-field
+                  [formGroup]="customerForm"
+                  controlName="contactPersonPhone"
+                  label="Contact Person Phone"
+                  type="text"
+                  id="contactPersonPhone"
+                  placeholder="Enter Contact Person Phone"
+                  [errors]="[
+                    { key: 'required', message: 'Contact Person Phone is required.' },
+                    {
+                      key: 'pattern',
+                      message: 'Please enter a valid 11-digit Egyptian number starting with 01.',
+                    },
+                  ]"
+                >
+                </app-input-field>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contract Period Section -->
+          <div class="mb-4">
+            <h5 class="fw-semibold mb-3 text-primary">
+              <i class="bi bi-calendar me-2"></i>Contract Period
+            </h5>
+            <div class="row g-3">
+              <!-- Start Date -->
+              <div class="col-md-6">
+                <app-input-field
+                  [formGroup]="customerForm"
+                  controlName="startDate"
+                  label="Start Date"
+                  type="date"
+                  id="startDate"
+                  [errors]="[{ key: 'required', message: 'Start Date is required.' }]"
+                >
+                </app-input-field>
+              </div>
+              <!-- End Date -->
+              <div class="col-md-6">
+                <app-input-field
+                  [formGroup]="customerForm"
+                  controlName="endDate"
+                  label="End Date"
+                  type="date"
+                  id="endDate"
+                  [errors]="[
+                    { key: 'required', message: 'End Date is required.' },
+                    {
+                      key: 'EndDateStartDateMismatch',
+                      message: 'End Date has to be after Start Date',
+                    },
+                  ]"
+                >
+                </app-input-field>
+              </div>
+            </div>
+          </div>
+
+          <!-- Images Section -->
+          <div class="mb-4">
+            <h5 class="fw-semibold mb-3 text-primary"><i class="bi bi-images me-2"></i>Images</h5>
+            <div class="border rounded p-4 text-center bg-light">
+              <i class="bi bi-cloud-upload display-4 text-muted"></i>
+              <p class="text-muted mt-2 mb-0">Click to upload multiple images</p>
+
+              <app-media-input
+                customClasses="d-none"
+                id="images"
+                [isMultiple]="true"
+                (fileSelected)="onImagesSelected($event)"
+                #imageInput
+              >
+              </app-media-input>
+              <app-button
+                customClasses="btn-outline-primary mt-3"
+                (click)="imageInput.click()"
+                [disabled]="isImageUploaded() || isLoading()"
+                type="button"
+                title="Add Images"
+              >
+                <span
+                  class="spinner-border spinner-border-sm me-2"
+                  [class.d-none]="!isImageUploaded() || !isLoading()"
+                ></span>
+                <i class="bi bi-plus-lg me-2" [class.d-none]="isImageUploaded() || isLoading()"></i
+                >Add Images
+              </app-button>
+
+              <!-- Image Preview Area -->
+              @if (pendingImages().length > 0) {
+                <div class="row g-2 mt-3">
+                  @for (preview of pendingImagePreviews(); track preview; let i = $index) {
+                    <div class="col-6 col-md-3">
+                      <div class="position-relative">
+                        <img
+                          [src]="preview"
+                          class="img-thumbnail"
+                          style="width: 100%; height: 120px; object-fit: cover"
+                        />
+                        <app-button
+                          customClasses="btn-danger btn-sm position-absolute top-0 end-0 m-1"
+                          (click)="removeImage(i)"
+                          title="Remove Image"
+                        >
+                          <i class="bi bi-x"></i>
+                        </app-button>
+                      </div>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="d-flex justify-content-end gap-3 pt-3 border-top">
+            <app-button
+              title="Cancel"
+              customClasses="btn-outline-secondary"
+              routerLink="/customer-list"
+            >
+              Cancel
+            </app-button>
+            <app-button
+              type="submit"
+              customClasses="btn-primary"
+              [disabled]="customerForm.invalid || isLoading()"
+              [title]="customerId ? 'Edit' : 'Create'"
+            >
+              <span
+                class="spinner-border spinner-border-sm me-2"
+                [class.d-none]="!isLoading() && !isImageUploaded()"
+              ></span>
+
+               <!-- Title changes based on mode (Add/Edit) -->
+              @if (customerId) {
+                Edit
+              } @else {
+                Create
+              }
+            </app-button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}
