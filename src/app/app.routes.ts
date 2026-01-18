@@ -7,8 +7,8 @@ import { TenantFormComponent } from './components/tenant/tenant-form.component/t
 export const routes: Routes = [
     {path: '' , redirectTo: 'customer-list', pathMatch: 'full'},
     {path: 'customer-list', component: CustomerListComponent},
-    {path: 'customer/create', component: CustomerFormComponent , data: { prerender: false } },
-    {path: 'customer/edit/:id', component: CustomerFormComponent , data: { prerender: false } },
-    {path: 'tenant-info/:id', component: TenantFormComponent, data: { prerender: false } }
+    {path: 'customer/create', component: CustomerFormComponent  },
+    {path: 'customer/edit/:id', component: CustomerFormComponent  },
+    {path: 'tenant-info/:id', component: TenantFormComponent}
     
 ];
