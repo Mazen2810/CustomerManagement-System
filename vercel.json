@@ -1,6 +1,6 @@
 {
   "buildCommand": "ng build --configuration production",
-  "outputDirectory": "dist/CustomerManagementSystem",
+  "outputDirectory": "dist/CustomerManagementSystem/browser",
   "rewrites": [
     {
       "source": "/(.*)",
